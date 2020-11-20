@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+
+    <progress value="0" max="10" id="progressBar"></progress>
+    <div id="countdown"></div>
+
+    <script type="text/javascript">
+    //Un alert espone 5 numeri casuali (<--aggiungo: che non siano doppi) --> Come? Inserisco in un array 5 numeri casuali e poi creo un alert che ne indica gli elementi
+    var HOW_MUCH_NUMBER = 5;//quanti numeri casuali
+    var numeriCasuali = [];//l'array in cui li devo inserire
+    do {//ciclo do while per numeri random. Fallo una volta
+      var randomNumber = Math.floor(Math.random() * 100) + 1
+      // Se l'array non contiene già il numero allora inseriscilo dentro
+      if (!numeriCasuali.includes(randomNumber)) {
+        numeriCasuali.push(randomNumber);
+      }
+    } while (numeriCasuali.length < HOW_MUCH_NUMBER);//fino a quando l'array rimane minore di 5 (zero conta)
+    alert(numeriCasuali);
+
+    //Da lì parte un timer di 10 secondi
+    var timeleft = 10;
+    var downloadTimer = setInterval(function(){
+      if(timeleft <= 0){
+        clearInterval(downloadTimer);
+        document.getElementById("countdown").innerHTML = "Stop!";
+      } else {
+        document.getElementById("countdown").innerHTML = timeleft + " secondi rimanenti";
+      }
+      document.getElementById("progressBar").value = 10 - timeleft;
+      timeleft -= 1;
+    }, 1000);
+
+    //Dopo 10 secondi l'utente deve inserire un prompt alla volta i numeri che ha visto precedentemente
+
+    var choicedNumbers = [];
+
+    function promptInsert() {
+      while (choicedNumbers.length < HOW_MUCH_NUMBER) {
+        var inputUserNumbers = parseInt(prompt("Inserisci uno dei numeri che hai memorizzato"));
+        choicedNumbers.push(inputUserNumbers);
+      }
+      var newArr = [];
+      for (var i = 0; i < numeriCasuali.length; i++) {
+        for (var j = 0; j < choicedNumbers.length; j++) {
+          if (numeriCasuali[i] === choicedNumbers[j]) {
+            newArr.push(numeriCasuali[i])
+          }
+        }
+        console.log(newArr);
+        alert("Hai indovinato i numeri: " + newArr);
+      };
+
+    }
+    var clock = setTimeout (promptInsert, 12000);
+
+    console.log(numeriCasuali);
+    console.log(choicedNumbers);
+
+    //Dopo che sono stati inseriti i 5 numeri, il software dice quanti e quali dei numeri da indovinare sono stati individuati
+    //Confrontare i due array e vedere se ci sono elementi in comune. Creare un array che contenga questi elementi in comune
+
+
+
+    </script>
+  </body>
+</html>
